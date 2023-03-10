@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-email-to-note",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "This Plugin looks at your Email and saves them directly into your vault",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

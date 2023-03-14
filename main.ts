@@ -2,16 +2,16 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Set
 
 // Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
+interface MailPluginSettings {
 	mySetting: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: MailPluginSettings = {
 	mySetting: 'default'
 }
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+export default class MailPlugin extends Plugin {
+	settings: MailPluginSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -39,7 +39,7 @@ export default class MyPlugin extends Plugin {
 
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new MailSettingTab(this.app, this));
 
 		//bruauche ich das ?
 
@@ -83,10 +83,10 @@ class SampleModal extends Modal {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+class MailSettingTab extends PluginSettingTab {
+	plugin: MailPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: MailPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -96,18 +96,31 @@ class SampleSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
+		containerEl.createEl('h2', {text: 'E-Mail to Obsidian Plugin Settings.'});
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
+			.setName('Receiving Mail Adress')
+			.setDesc('The mail adress where you want to receive Mails')
 			.addText(text => text
-				.setPlaceholder('Enter your secret')
+				.setPlaceholder('sender@yourmail.com')
 				.setValue(this.plugin.settings.mySetting)
 				.onChange(async (value) => {
 					console.log('Secret: ' + value);
 					this.plugin.settings.mySetting = value;
 					await this.plugin.saveSettings();
 				}));
+
+		new Setting(containerEl)
+			.setName('Sending Mail Adress')
+			.setDesc('The Mail Adress you are sending from')
+			.addText(text => text
+				.setPlaceholder('yourmail@you.com')
+				.setValue(this.plugin.settings.mySetting)
+				.onChange(async (value) => {
+					console.log('Secret: ' + value);
+					this.plugin.settings.mySetting = value;
+					await this.plugin.saveSettings();
+				}));
+
 	}
 }
